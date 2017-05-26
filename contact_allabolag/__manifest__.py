@@ -1,0 +1,28 @@
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+#    Odoo, Open Source Management Solution
+#    Copyright (C) 2016 Linserv Aktiebolag, Sweden (<http://www.linserv.se>).
+#
+##############################################################################
+
+{
+  'name': 'Company - Allabolag',
+  'version': '10.0.0.1',
+  'category': 'Api',
+  'summary': 'Search & Update Company contacts',
+  'description': """
+##############################################################
+                Allabolag - Company Contacts Link
+##############################################################
+  """,
+  'author': 'Martin WIlderoth',
+  'website': 'www.linserv.se/en/',
+  'depends': ['base'],
+  'application': False,
+  'auto_install': False,
+  'installable': True,
+  'data': [ 
+  	'views/res_partner_view.xml',
+	],
+}
