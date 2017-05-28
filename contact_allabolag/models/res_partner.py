@@ -70,3 +70,8 @@ class ResPartner(models.Model):
             if len(str(self.orgnr)) != 10:
                 raise ValidationError('Orgnr must be 10 digits number.\nYou entered {} digits: {}'.format(len(str(self.orgnr)), self.orgnr))
 
+
+    @api.multi
+    def action_update_company_info_allabolag(self):
+
+        return True

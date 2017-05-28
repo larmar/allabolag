@@ -9,6 +9,11 @@
 				<field name="category_id" position="after">
 					<field name="orgnr" attrs="{'invisible': [('is_company','=',False)]}" widget="char"/>
 				</field>
+				<sheet position="before">
+					<header name="partner_header">
+						<button name="action_update_company_info_allabolag" type="object" string="Update Company Info" class="oe_highlight" attrs="{'invisible': [('is_company','=',False)]}"/>
+					</header>
+				</sheet>
 			</field>
 		</record>
 
