@@ -15,7 +15,7 @@ _logger = logging.getLogger(__name__)
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    orgnr = fields.Integer('Orgnr')
+    orgnr = fields.Char('Orgnr')
 
     @api.model_cr
     def init(self):
