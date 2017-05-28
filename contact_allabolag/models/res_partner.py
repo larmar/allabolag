@@ -66,7 +66,8 @@ class ResPartner(models.Model):
         if self.orgnr:
             orgnr_search = self.search([('orgnr', '=', self.orgnr)])
             if orgnr_search:
-                raise ValidationError('Orgnr {} already exists for another company.\nCompany: {}'.format(self.orgnr, orgnr_search[0].name))
+                if self.id and isinstance(self.id, int) and self.id != orgnr_search[0].id:
+                    raise ValidationError('Orgnr {} already exists for another company.\nCompany: {}'.format(self.orgnr, orgnr_search[0].name))
             if len(str(self.orgnr)) != 10:
                 raise ValidationError('Orgnr must be 10 digits number.\nYou entered {} digits: {}'.format(len(str(self.orgnr)), self.orgnr))
 
