@@ -54,7 +54,7 @@ class ResPartner(models.Model):
                 if len(str(orgnr)) != 10:
                     raise ValidationError('Orgnr must be 10 digits number.\nYou entered {} digits: {}'.format(len(str(orgnr)), orgnr))
                 orgnr_search = self.search([('orgnr', '=', orgnr)])
-                if orgnr_search:
+                if orgnr_search and orgnr_search[0].id != self.id:
                     raise ValidationError('Orgnr {} already exists for another company.\nCompany: {}'.format(orgnr, orgnr_search[0].name))
         return super(ResPartner, self).write(vals)
 
