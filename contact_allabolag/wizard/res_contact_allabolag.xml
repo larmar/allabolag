@@ -22,7 +22,6 @@
 								<field name="ba_kommun" readonly="1"/>
 								<field name="ba_lan" readonly="1"/>
 								<field name="ba_postnr" readonly="1"/>
-								<button name="action_view_details" type="object" string="View" class="oe_link"/>
 							</tree>
 						</field>
 						<footer>
