@@ -9,6 +9,9 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
+import requests
+import xml.etree.ElementTree as ET
+
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -90,5 +93,84 @@ class ResPartner(models.Model):
 
     @api.multi
     def action_update_company_info_allabolag(self):
+        for partner in self:
+            key = False
+            config_param = self.env['ir.config_parameter'].search([('key','=','allaboalg.key.saldo')])
+            if not config_param:
+                raise ValidationError('System Parameter not found with Key "allaboalg.key.saldo".\n\n Please make sure it exists with valid Session Key.')
+            if config_param:
+                key = config_param[0].value
+            
+            orgnr = partner.orgnr or False
+            state_id = partner.state_id and partner.state_id.name or False
+            name = partner.name
+            
+            url = 'http://www.allabolag.se/ws/BIWS/service.php?key=%s&type=fetch'%(key)
+            query = '&query=jurnamn:%s'%(name)
 
+            if orgnr:
+                query += '%%20AND%%20orgnr:%s'%(str(orgnr))
+
+            if state_id:
+                query += '%%20AND%%20ba_postort:%s'%(str(state_id))
+
+            results_range = '&recfrom=1&recto=99' #to limit results in response upto 99
+
+            url = url + query + results_range
+
+            result = requests.post(url)
+
+            data = ET.fromstring(result.text)
+
+            res = {}
+            cnt = 0
+            tag_head = False
+            koncernmoder_check = False 
+            for elem in data.iter():
+                if elem.tag == 'record':
+                    cnt += 1
+                    res['record'+str(cnt)] = {}
+                    tag_head = 'record'+str(cnt)
+                elif tag_head and elem.text:
+                    #ignore data from inside koncernmoder tag
+                    if elem.tag == 'koncernmoder':
+                        koncernmoder_check = True
+                    if elem.tag == 'mgmt':
+                        koncernmoder_check = False
+
+                    if koncernmoder_check is False:
+                        res[tag_head][str(elem.tag)] = elem.text
+
+            if res and res.keys():
+                contact_id = self.env['res.contact.allabolag'].create({})
+                for record in res:
+                    vals = {
+                        'jurnamn': res[record].get('jurnamn', False),
+                        'orgnr': res[record].get('orgnr', False),
+                        'phone': res[record].get('riktnrtelnr', False),
+                        'ba_adress': res[record].get('ba_adress', False),
+                        'ba_postnr': res[record].get('ba_postnr', False),
+                        'ba_postort': res[record].get('ba_postort', False),
+                        'ba_kommun': res[record].get('ba_kommun', False),
+                        'ba_lan': res[record].get('ba_lan', False),
+
+                        'ua_adress': res[record].get('ua_adress', False),
+                        'ua_adress': res[record].get('ua_adress', False),
+                        'ua_postort': res[record].get('ua_postort', False),
+                        'ua_kommun': res[record].get('ua_kommun', False),
+                        'ua_lan': res[record].get('ua_lan', False),
+                        'res_id': contact_id.id
+                        }
+                    self.env['res.contact.allabolag.line'].create(vals)
+                return {
+                    'name': 'Contact - Allabolag',
+                    'type': 'ir.actions.act_window',
+                    'res_model': 'res.contact.allabolag',
+                    'res_id': int(contact_id.id),
+                    'view_type': 'form',
+                    'view_mode': 'form',
+                    'target': 'new'
+                }
+            else:
+                raise ValidationError('Company Contact Details not found in Allabolag Directory.')
         return True

@@ -9,7 +9,7 @@
 {
   'name': 'Company - Allabolag',
   'version': '10.0.0.1',
-  'category': 'Api',
+  'category': 'API',
   'summary': 'Search & Update Company contacts',
   'description': """
 ##############################################################
@@ -24,5 +24,6 @@
   'installable': True,
   'data': [ 
   	'views/res_partner_view.xml',
+    'wizard/res_contact_allabolag.xml',
 	],
 }

@@ -5,3 +5,4 @@
 #    Copyright (C) 2016 Linserv Aktiebolag, Sweden (<http://www.linserv.se>).
 #
 ##############################################################################
+from . import res_contact_allabolag

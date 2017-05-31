@@ -1,0 +1,64 @@
+<odoo>
+	<data>
+
+		<record id="contact_allabolag_form" model="ir.ui.view">
+			<field name="name">contact.allabolag.form</field>
+			<field name="model">res.contact.allabolag</field>
+			<field name="arch" type="xml">
+				<form string="Contact - Allabolag">
+					<group colspan="4">
+						<label string="Select Contact from below to update Company data."/>
+						<newline/>
+						<field name="contact_ids" colspan="4" nolabel="1">
+							<tree string="Contacts" editable="top" options="{'no_create': 1, 'no_delete': 1}">
+								<field name="res_id" invisible="1"/>
+								<field name="contact_select" string="#"/>
+								<field name="jurnamn" readonly="1"/>
+								<field name="orgnr" readonly="1"/>
+								<field name="phone" readonly="1"/>
+								<field name="ba_adress" readonly="1"/>
+								<field name="ba_postort" readonly="1"/>
+								<field name="ba_kommun" readonly="1"/>
+								<field name="ba_lan" readonly="1"/>
+								<field name="ba_postnr" readonly="1"/>
+								<button name="action_view_details" type="object" string="View" class="oe_link"/>
+							</tree>
+						</field>
+						<footer>
+							<button name="action_update" type="object" string="Update Company Details" class="oe_highlight"/>
+							<button name="cancel" special="cancel" string="cancel" class="oe_link"/>
+						</footer>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="contact_allabolag_main_form" model="ir.ui.view">
+			<field name="name">contact.allabolag.main.form</field>
+			<field name="model">res.contact.allabolag.line</field>
+			<field name="arch" type="xml">
+				<form string="Contact - Allabolag">
+					<group string="Company Detals" colspan="4">
+						<field name="jurnamn" readonly="1"/>
+						<field name="orgnr" readonly="1"/>
+						<field name="ba_adress" readonly="1"/>
+						<field name="ba_postort" readonly="1"/>
+						<field name="ba_kommun" readonly="1"/>
+						<field name="ba_lan" readonly="1"/>
+						<field name="ba_postnr" readonly="1"/>
+						<field name="phone" readonly="1"/>
+					</group>
+					<newline/>
+					<group string="Contact - Invoice">
+						<field name="ua_adress" readonly="1"/>
+						<field name="ua_kommun" readonly="1"/>
+						<field name="ua_postort" readonly="1"/>
+						<field name="ua_lan" readonly="1"/>
+						<field name="ua_postnr" readonly="1"/>
+					</group>
+				</form>
+			</field>
+		</record>
+
+	</data>
+</odoo>
