@@ -58,8 +58,8 @@ class ResContactAllabolag(models.TransientModel):
         #add/update invoice contact:
         vals = {}
         if contact_ids[0].ua_adress: vals['street'] = contact_ids[0].ua_adress
-        if contact_ids[0].ua_postort: vals['city'] = contact_ids[0].ua_postort
-        if contact_ids[0].ua_kommun: vals['street2'] = contact_ids[0].ua_kommun
+        if contact_ids[0].ua_postort: vals['city'] = contact_ids[0].ua_kommun
+        if contact_ids[0].ua_kommun: vals['street2'] = contact_ids[0].ua_postort
         if contact_ids[0].ua_postnr: vals['zip'] = contact_ids[0].ua_postnr
         if contact_ids[0].ua_lan:
             state_id = self.env['res.country.state'].search([('name','=',contact_ids[0].ua_lan)])
@@ -92,8 +92,8 @@ class ResContactAllabolagLine(models.TransientModel):
     #Contact - Invoice Address fields:
     ua_adress = fields.Char('Street')
     ua_postnr = fields.Char('Zip')
-    ua_postort = fields.Char('City')
-    ua_kommun = fields.Char('Street2')
+    ua_postort = fields.Char('Street2')
+    ua_kommun = fields.Char('City')
     ua_lan = fields.Char('State')
 
     contact_select = fields.Boolean('Select')
