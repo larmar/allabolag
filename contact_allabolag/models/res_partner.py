@@ -15,6 +15,11 @@ import xml.etree.ElementTree as ET
 import logging
 _logger = logging.getLogger(__name__)
 
+import sys
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 def check_digits(number = False):
     if number:
         for res in str(number):
