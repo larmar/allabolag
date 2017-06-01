@@ -25,5 +25,7 @@
   'data': [ 
   	'views/res_partner_view.xml',
     'wizard/res_contact_allabolag.xml',
+
+    'data/ir_config.xml',
 	],
 }

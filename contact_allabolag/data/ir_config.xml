@@ -1,0 +1,10 @@
+<odoo>
+	<data noupdate="1">
+
+		<record id="config_allabolag_session_key" model="ir.config_parameter">
+			<field name="key">allabolag.key.saldo</field>
+			<field name="value">XXXXXX</field>
+		</record>
+
+	</data>
+</odoo>
