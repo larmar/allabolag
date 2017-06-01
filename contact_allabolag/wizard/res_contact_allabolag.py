@@ -74,6 +74,14 @@ class ResContactAllabolag(models.TransientModel):
                 vals['type'] = 'invoice'
                 invoice_ids = self.env['res.partner'].create(vals)
                 
+        #update system parameter values:
+        config_param = self._context.get('params_id', False)
+        if config_param:
+            config_param = self.env['ir.config_parameter'].search([('id','=',config_param)])
+            config_param[0].write({
+                    'last_saldo': self._context.get('saldo', False),
+                    'saldo_request_date': fields.Datetime.now()
+            })
         return True
 
 class ResContactAllabolagLine(models.TransientModel):

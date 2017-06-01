@@ -99,6 +99,8 @@ class ResPartner(models.Model):
     @api.multi
     def action_update_company_info_allabolag(self):
         for partner in self:
+            context = dict()
+
             key = False
             config_param = self.env['ir.config_parameter'].search([('key','=','allabolag.key.saldo')])
             if not config_param:
@@ -131,7 +133,10 @@ class ResPartner(models.Model):
             cnt = 0
             tag_head = False
             koncernmoder_check = False 
+            saldo = False 
             for elem in data.iter():
+                if elem.tag == 'saldo':
+                    saldo = elem.text
                 if elem.tag == 'record':
                     cnt += 1
                     res['record'+str(cnt)] = {}
@@ -145,6 +150,9 @@ class ResPartner(models.Model):
 
                     if koncernmoder_check is False:
                         res[tag_head][str(elem.tag)] = elem.text
+            
+            context['saldo'] = saldo
+            context['params_id'] = config_param[0].id
 
             if res and res.keys():
                 contact_id = self.env['res.contact.allabolag'].create({})
@@ -174,7 +182,8 @@ class ResPartner(models.Model):
                     'res_id': int(contact_id.id),
                     'view_type': 'form',
                     'view_mode': 'form',
-                    'target': 'new'
+                    'target': 'new',
+                    'context': context,
                 }
             else:
                 raise ValidationError('Company Contact Details not found in Allabolag Directory.')
