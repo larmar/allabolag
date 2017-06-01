@@ -118,8 +118,8 @@ class ResPartner(models.Model):
             if orgnr:
                 query += '%%20AND%%20orgnr:%s'%(str(orgnr))
 
-            if state_id:
-                query += '%%20AND%%20ba_postort:%s'%(str(state_id))
+            #if state_id:
+            #    query += '%%20AND%%20ba_postort:%s'%(str(state_id))
 
             results_range = '&recfrom=1&recto=99' #to limit results in response upto 99
 
