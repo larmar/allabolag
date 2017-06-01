@@ -131,12 +131,14 @@ class ResPartner(models.Model):
 
             res = {}
             cnt = 0
-            tag_head = False
+            tag_head, message = False, ''
             koncernmoder_check = False 
             saldo = False 
             for elem in data.iter():
                 if elem.tag == 'saldo':
                     saldo = elem.text
+                if elem.tag == 'message':
+                    message = elem.text
                 if elem.tag == 'record':
                     cnt += 1
                     res['record'+str(cnt)] = {}
@@ -153,6 +155,8 @@ class ResPartner(models.Model):
             
             context['saldo'] = saldo
             context['params_id'] = config_param[0].id
+            if message:
+                message = 'Message: ' + str(message)
 
             if res and res.keys():
                 contact_id = self.env['res.contact.allabolag'].create({})
@@ -186,5 +190,5 @@ class ResPartner(models.Model):
                     'context': context,
                 }
             else:
-                raise ValidationError('Company Contact Details not found in Allabolag Directory.')
+                raise ValidationError('Company Contact Details not found in Allabolag Directory.\n\n%s'%(message))
         return True
