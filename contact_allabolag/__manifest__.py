@@ -27,5 +27,6 @@
     'wizard/res_contact_allabolag.xml',
 
     'data/ir_config.xml',
+    'data/res.country.state.csv',
 	],
 }
