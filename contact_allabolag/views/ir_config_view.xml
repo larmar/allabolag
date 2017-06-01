@@ -1,0 +1,16 @@
+<odoo>
+	<data>
+
+        <record model="ir.ui.view" id="view_ir_config_allabolag_form">
+            <field name="model">ir.config_parameter</field>
+            <field name="inherit_id" ref="base.view_ir_config_form"/>
+            <field name="arch" type="xml">
+                <field name="value" position="after">
+                	<field name="last_saldo" attrs="{'invisible': [('key','!=','allabolag.key.saldo')]}"/>
+                	<field name="saldo_request_date" attrs="{'invisible': [('key','!=','allabolag.key.saldo')]}"/>
+                </field>
+            </field>
+        </record>
+
+	</data>
+</odoo>

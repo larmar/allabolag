@@ -23,6 +23,7 @@
   'auto_install': False,
   'installable': True,
   'data': [ 
+    'views/ir_config_view.xml',
   	'views/res_partner_view.xml',
     'wizard/res_contact_allabolag.xml',
 
