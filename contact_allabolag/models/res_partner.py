@@ -95,9 +95,9 @@ class ResPartner(models.Model):
     def action_update_company_info_allabolag(self):
         for partner in self:
             key = False
-            config_param = self.env['ir.config_parameter'].search([('key','=','allaboalg.key.saldo')])
+            config_param = self.env['ir.config_parameter'].search([('key','=','allabolag.key.saldo')])
             if not config_param:
-                raise ValidationError('System Parameter not found with Key "allaboalg.key.saldo".\n\n Please make sure it exists with valid Session Key.')
+                raise ValidationError('System Parameter not found with Key "allabolag.key.saldo".\n\n Please make sure it exists with valid Session Key.')
             if config_param:
                 key = config_param[0].value
             
