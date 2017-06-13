@@ -35,13 +35,17 @@ class ResContactAllabolag(models.TransientModel):
         vals = {
             'name': contact_ids[0].jurnamn,
         }
-        
+
         if contact_ids[0].orgnr: vals['orgnr'] = contact_ids[0].orgnr 
         if contact_ids[0].phone: vals['phone'] = contact_ids[0].phone
-        if contact_ids[0].ba_adress: vals['street'] = contact_ids[0].ba_adress
-        if contact_ids[0].ba_postort: vals['street2'] = contact_ids[0].ba_postort
-        if contact_ids[0].ba_postnr: vals['zip'] = contact_ids[0].ba_postnr
-        if contact_ids[0].ba_kommun: vals['city'] = contact_ids[0].ba_kommun
+
+        if contact_ids[0].ua_adress: vals['street'] = contact_ids[0].ua_adress
+        if contact_ids[0].ua_postort: vals['city'] = contact_ids[0].ua_postort
+        if contact_ids[0].ua_kommun: vals['street2'] = contact_ids[0].ua_kommun
+        if contact_ids[0].ua_postnr: vals['zip'] = contact_ids[0].ua_postnr
+        if contact_ids[0].ua_lan:
+            state_id = self.env['res.country.state'].search([('name','=',contact_ids[0].ua_lan)])
+            if state_id: vals['state_id'] = state_id.id
 
         lang_id = self.env['res.lang'].search([('iso_code','=','sv_SE')])
         if lang_id: vals['lang'] = 'sv_SE'
@@ -55,24 +59,27 @@ class ResContactAllabolag(models.TransientModel):
 
         partner_ids.write(vals)
 
-        #add/update invoice contact:
+        #add/update contact - other address:
         vals = {}
-        if contact_ids[0].ua_adress: vals['street'] = contact_ids[0].ua_adress
-        if contact_ids[0].ua_postort: vals['city'] = contact_ids[0].ua_kommun
-        if contact_ids[0].ua_kommun: vals['street2'] = contact_ids[0].ua_postort
-        if contact_ids[0].ua_postnr: vals['zip'] = contact_ids[0].ua_postnr
-        if contact_ids[0].ua_lan:
-            state_id = self.env['res.country.state'].search([('name','=',contact_ids[0].ua_lan)])
+        if contact_ids[0].ba_adress: vals['street'] = contact_ids[0].ba_adress
+        if contact_ids[0].ba_kommun: vals['street2'] = contact_ids[0].ba_kommun
+        if contact_ids[0].ba_postnr: vals['zip'] = contact_ids[0].ba_postnr
+        if contact_ids[0].ba_postort: vals['city'] = contact_ids[0].ba_postort
+        if contact_ids[0].ba_lan:
+            state_id = self.env['res.country.state'].search([('name','=',contact_ids[0].ba_lan)])
             if state_id: vals['state_id'] = state_id.id
-        
+
+        if country_id: vals['country_id'] = country_id.id
+        if lang_id: vals['lang'] = 'sv_SE'
+
         if vals:
-            invoice_ids = self.env['res.partner'].search([('parent_id','=',partner_ids.id), ('type','=','invoice')])
-            if invoice_ids:
-                invoice_ids[0].write(vals)
+            other_contact = self.env['res.partner'].search([('parent_id','=',partner_ids.id), ('type','=','other')])
+            if other_contact:
+                other_contact[0].write(vals)
             else:
                 vals['parent_id'] = partner_ids.id
-                vals['type'] = 'invoice'
-                invoice_ids = self.env['res.partner'].create(vals)
+                vals['type'] = 'other'
+                other_contact = self.env['res.partner'].create(vals)
                 
         #update system parameter values:
         config_param = self._context.get('params_id', False)
@@ -88,20 +95,22 @@ class ResContactAllabolagLine(models.TransientModel):
     _name = "res.contact.allabolag.line"
 
     res_id = fields.Many2one('res.contact.allabolag', 'Resource')
+
+    #Company fields:
     jurnamn = fields.Char('Name')
     orgnr = fields.Char('Orgnr')
     phone = fields.Char('Phone')
-    ba_adress = fields.Char('Street')
-    ba_postnr = fields.Char('Zip')
-    ba_postort = fields.Char('Street2')
-    ba_kommun = fields.Char('City')
-    ba_lan = fields.Char('State')
-    
-    #Contact - Invoice Address fields:
     ua_adress = fields.Char('Street')
     ua_postnr = fields.Char('Zip')
-    ua_postort = fields.Char('Street2')
-    ua_kommun = fields.Char('City')
+    ua_postort = fields.Char('City')
+    ua_kommun = fields.Char('Municipality')
     ua_lan = fields.Char('State')
+
+    #Contact - Other Address fields:
+    ba_adress = fields.Char('Street')
+    ba_postnr = fields.Char('Zip')
+    ba_postort = fields.Char('City')
+    ba_kommun = fields.Char('Municipality')
+    ba_lan = fields.Char('State')
 
     contact_select = fields.Boolean('Select')

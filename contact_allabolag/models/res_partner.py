@@ -165,17 +165,17 @@ class ResPartner(models.Model):
                         'jurnamn': res[record].get('jurnamn', False),
                         'orgnr': res[record].get('orgnr', False),
                         'phone': res[record].get('riktnrtelnr', False),
-                        'ba_adress': res[record].get('ba_adress', False),
+                        'ba_adress': res[record].get('ba_gatuadress', False),
                         'ba_postnr': res[record].get('ba_postnr', False),
                         'ba_postort': res[record].get('ba_postort', False),
                         'ba_kommun': res[record].get('ba_kommun', False),
                         'ba_lan': res[record].get('ba_lan', False),
 
-                        'ua_adress': res[record].get('ua_adress', False),
-                        'ua_adress': res[record].get('ua_adress', False),
+                        'ua_adress': res[record].get('ua_gatuadress', False),
                         'ua_postort': res[record].get('ua_postort', False),
                         'ua_kommun': res[record].get('ua_kommun', False),
                         'ua_lan': res[record].get('ua_lan', False),
+                        'ua_postnr': res[record].get('ua_postnr', False),
                         'res_id': contact_id.id
                         }
                     self.env['res.contact.allabolag.line'].create(vals)

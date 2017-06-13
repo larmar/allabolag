@@ -17,11 +17,11 @@
 								<field name="jurnamn" readonly="1"/>
 								<field name="orgnr" readonly="1"/>
 								<field name="phone" readonly="1"/>
-								<field name="ba_adress" readonly="1"/>
-								<field name="ba_postort" readonly="1"/>
-								<field name="ba_kommun" readonly="1"/>
+								<field name="ua_adress" readonly="1"/>
+								<field name="ua_postort" readonly="1"/>
+								<field name="ua_kommun" readonly="1"/>
 								<field name="ba_lan" readonly="1"/>
-								<field name="ba_postnr" readonly="1"/>
+								<field name="ua_postnr" readonly="1"/>
 							</tree>
 						</field>
 						<footer>
