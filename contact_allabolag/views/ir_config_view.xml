@@ -8,6 +8,7 @@
                 <field name="value" position="after">
                 	<field name="last_saldo" attrs="{'invisible': [('key','!=','allabolag.key.saldo')]}"/>
                 	<field name="saldo_request_date" attrs="{'invisible': [('key','!=','allabolag.key.saldo')]}"/>
+                    <field name="warning" attrs="{'invisible': [('key','!=','allabolag.key.saldo')]}"/>
                 </field>
             </field>
         </record>
