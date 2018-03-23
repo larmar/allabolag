@@ -13,3 +13,5 @@ class ConfigParams(models.Model):
 
     last_saldo = fields.Char('Last Saldo')
     saldo_request_date = fields.Datetime('Last Request')
+    warning = fields.Text('Warning', translate=True)
+    

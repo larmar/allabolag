@@ -31,12 +31,8 @@ class ResPartner(models.Model):
     def init(self):
         """Create Unique constraint allowing Null Values on orgnr column
         """
-        try:
-            self._cr.execute("""CREATE UNIQUE INDEX  res_partner_orgnr_unique_idx ON res_partner(orgnr) WHERE orgnr IS NOT NULL;""")
-        except Exception as e:
-            _logger.debug("Unique Constraint Creation error: %s"%(e))
-            pass
-
+        self._cr.execute("""CREATE UNIQUE INDEX ON res_partner(orgnr) WHERE orgnr IS NOT NULL;""")
+        
     @api.model
     def create(self, vals):
         """ Validate Orgnr :
