@@ -15,11 +15,6 @@ import xml.etree.ElementTree as ET
 import logging
 _logger = logging.getLogger(__name__)
 
-import sys
-
-reload(sys)
-sys.setdefaultencoding('utf-8')
-
 def check_digits(number = False):
     if number:
         for res in str(number):
@@ -38,7 +33,7 @@ class ResPartner(models.Model):
         """
         try:
             self._cr.execute("""CREATE UNIQUE INDEX  res_partner_orgnr_unique_idx ON res_partner(orgnr) WHERE orgnr IS NOT NULL;""")
-        except Exception, e:
+        except Exception as e:
             _logger.debug("Unique Constraint Creation error: %s"%(e))
             pass
 

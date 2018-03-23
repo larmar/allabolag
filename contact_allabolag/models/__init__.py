@@ -7,4 +7,4 @@
 ##############################################################################
 
 from . import ir_config
-import res_partner
+from . import res_partner
