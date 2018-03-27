@@ -39,6 +39,11 @@ class ResContactAllabolag(models.TransientModel):
         if contact_ids[0].orgnr: vals['orgnr'] = contact_ids[0].orgnr 
         if contact_ids[0].phone: vals['phone'] = contact_ids[0].phone
 
+        company_vat = False
+        if contact_ids[0].orgnr: 
+            company_vat = 'SE' + str(contact_ids[0].orgnr) + '01'
+            vals['vat'] = company_vat
+
         if contact_ids[0].ua_adress: vals['street'] = contact_ids[0].ua_adress
         if contact_ids[0].ua_postort: vals['city'] = contact_ids[0].ua_postort
         if contact_ids[0].ua_kommun: vals['street2'] = contact_ids[0].ua_kommun
