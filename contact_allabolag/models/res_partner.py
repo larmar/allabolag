@@ -97,7 +97,12 @@ class ResPartner(models.Model):
             if not config_param:
                 raise ValidationError('System Parameter not found with Key "allabolag.key.saldo".\n\n Please make sure it exists with valid Session Key.')
             if config_param:
+                if config_param[0].last_saldo < 3:
+                    raise ValidationError('Invalid Last Saldo for System Parameter!\n\n%s'%(config_param[0].warning))
+
                 key = config_param[0].value
+                #update Last saldo - reducing it by 3
+                config_param[0].write({'last_saldo': config_param[0].last_saldo - 3})
             
             orgnr = partner.orgnr or False
             state_id = partner.state_id and partner.state_id.name or False

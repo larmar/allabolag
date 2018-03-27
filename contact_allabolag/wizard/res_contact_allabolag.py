@@ -91,7 +91,7 @@ class ResContactAllabolag(models.TransientModel):
         if config_param:
             config_param = self.env['ir.config_parameter'].search([('id','=',config_param)])
             config_param[0].write({
-                    'last_saldo': self._context.get('saldo', False),
+                    'last_saldo': config_param[0].last_saldo - 3,
                     'saldo_request_date': fields.Datetime.now()
             })
         return True
