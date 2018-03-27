@@ -11,7 +11,7 @@ from odoo import models, fields
 class ConfigParams(models.Model):
     _inherit = "ir.config_parameter"
 
-    last_saldo = fields.Char('Last Saldo')
+    last_saldo = fields.Integer('Last Saldo')
     saldo_request_date = fields.Datetime('Last Request')
     warning = fields.Text('Warning', translate=True)
     
