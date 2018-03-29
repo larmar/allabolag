@@ -102,7 +102,7 @@ class ResPartner(models.Model):
 
                 key = config_param[0].value
                 #update Last saldo - reducing it by 3
-                config_param[0].write({'last_saldo': config_param[0].last_saldo - 3})
+                config_param[0].sudo().write({'last_saldo': config_param[0].last_saldo - 3})
             
             orgnr = partner.orgnr or False
             state_id = partner.state_id and partner.state_id.name or False
