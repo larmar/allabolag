@@ -29,5 +29,7 @@
 
     'data/ir_config.xml',
     'data/res.country.state.csv',
+
+    'security/ir.model.access.csv',
 	],
 }
