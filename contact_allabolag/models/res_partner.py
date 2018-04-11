@@ -41,12 +41,6 @@ class ResPartner(models.Model):
         if vals and isinstance(vals, dict):
             orgnr = vals.get('orgnr', False)
             if orgnr:
-                if len(str(orgnr)) != 10:
-                    raise ValidationError('Orgnr must be 10 digits number.\nYou entered {} digits: {}'.format(len(str(orgnr)), orgnr))
-
-                if not check_digits(str(orgnr)):
-                    raise ValidationError('Orgnr must be 10 digits number between 0-9.\nYou entered: {}'.format(orgnr))
-
                 orgnr_search = self.search([('orgnr', '=', orgnr)])
                 if orgnr_search:
                     raise ValidationError('Orgnr {} already exists for another company.\nCompany: {}'.format(orgnr, orgnr_search[0].name))
@@ -60,12 +54,6 @@ class ResPartner(models.Model):
         if vals and isinstance(vals, dict):
             orgnr = vals.get('orgnr', False)
             if orgnr: 
-                if len(str(orgnr)) != 10:
-                    raise ValidationError('Orgnr must be 10 digits number.\nYou entered {} digits: {}'.format(len(str(orgnr)), orgnr))
-
-                if not check_digits(str(orgnr)):
-                    raise ValidationError('Orgnr must be 10 digits number between 0-9.\nYou entered: {}'.format(orgnr))
-
                 orgnr_search = self.search([('orgnr', '=', orgnr)])
                 if orgnr_search and orgnr_search[0].id != self.id:
                     raise ValidationError('Orgnr {} already exists for another company.\nCompany: {}'.format(orgnr, orgnr_search[0].name))
@@ -81,10 +69,6 @@ class ResPartner(models.Model):
             if orgnr_search:
                 if self.id and isinstance(self.id, int) and self.id != orgnr_search[0].id:
                     raise ValidationError('Orgnr {} already exists for another company.\nCompany: {}'.format(self.orgnr, orgnr_search[0].name))
-            if len(str(self.orgnr)) != 10:
-                raise ValidationError('Orgnr must be 10 digits number.\nYou entered {} digits: {}'.format(len(str(self.orgnr)), self.orgnr))
-            if not check_digits(str(self.orgnr)):
-                raise ValidationError('Orgnr must be 10 digits number between 0-9.\nYou entered: {}'.format(self.orgnr))
 
 
     @api.multi
