@@ -112,9 +112,9 @@ class ResPartner(models.Model):
             res = {}
             cnt = 0
             tag_head, message = False, ''
-            koncernmoder_check = False 
             saldo = False 
             for elem in data.iter():
+                koncernmoder_check = False
                 if elem.tag == 'saldo':
                     saldo = elem.text
                 if elem.tag == 'message':
@@ -132,7 +132,6 @@ class ResPartner(models.Model):
 
                     if koncernmoder_check is False:
                         res[tag_head][str(elem.tag)] = elem.text
-            
             context['saldo'] = saldo
             context['params_id'] = config_param[0].id
             if message:
@@ -142,7 +141,7 @@ class ResPartner(models.Model):
                 contact_id = self.env['res.contact.allabolag'].create({})
                 for record in res:
                     vals = {
-                        'jurnamn': res[record].get('jurnamn', False),
+                        'jurnamn': res[record].get('ftgnamn', False),
                         'orgnr': res[record].get('orgnr', False),
                         'phone': res[record].get('riktnrtelnr', False),
                         'ba_adress': res[record].get('ba_gatuadress', False),
