@@ -109,6 +109,11 @@ class ResPartner(models.Model):
 
             data = ET.fromstring(result.text)
 
+            #remove koncernmoder tag from result
+            for child in data.findall(".//record"):
+                for koncernmoder in child.findall(".//koncernmoder[1]"):
+                    child.remove(koncernmoder)
+
             res = {}
             cnt = 0
             tag_head, message = False, ''
@@ -129,7 +134,6 @@ class ResPartner(models.Model):
                         koncernmoder_check = True
                     if elem.tag == 'mgmt':
                         koncernmoder_check = False
-
                     if koncernmoder_check is False:
                         res[tag_head][str(elem.tag)] = elem.text
             context['saldo'] = saldo
